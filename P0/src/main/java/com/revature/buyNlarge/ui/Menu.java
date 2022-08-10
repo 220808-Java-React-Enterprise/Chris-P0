@@ -1,5 +1,7 @@
 package com.revature.buyNlarge.ui;
 
-public interface MenuInterface {
+import java.util.Map;
+
+public interface Menu {
     public void display();
 }

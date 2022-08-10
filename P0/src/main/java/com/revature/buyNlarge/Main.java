@@ -3,6 +3,15 @@ import com.revature.buyNlarge.ui.*;
 
 public class Main {
     public static void main(String[] args) {
-        new MainMenu().display();
+        UIState uiState = new UIState();
+
+        uiState.pushNavigator(new MainMenu(uiState));
+        uiState.pushNavigator(new LoginMenu(uiState));
+
+        while(!uiState.navigatorIsEmpty()){
+            uiState.popNavigator().display();
+        }
+
+
     }
 }
