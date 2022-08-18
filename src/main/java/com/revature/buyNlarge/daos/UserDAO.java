@@ -51,19 +51,6 @@ public class UserDAO implements DAO<User> {
         return null;
     }
 
-    /**
-    public String getUsername(String username) {
-        try (Connection con = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = con.prepareStatement("SELECT (username) FROM users WHERE username = ?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getString("username");
-        } catch (SQLException e) {
-            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
-        }
-        return null;
-    }
-
     public User getUserByUsernameAndPassword(String username, String password) {
         try (Connection con = ConnectionFactory.getInstance().getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
@@ -71,11 +58,10 @@ public class UserDAO implements DAO<User> {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
-                return new User(rs.getString("id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
+                return new User(rs.getString("username"), rs.getString("password"), rs.getBoolean("isAdmin"));
         } catch (SQLException e) {
-            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
         }
         return null;
     }
-     **/
 }

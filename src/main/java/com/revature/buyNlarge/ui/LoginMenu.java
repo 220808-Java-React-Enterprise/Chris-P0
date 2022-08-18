@@ -20,7 +20,12 @@ public class LoginMenu implements Menu {
             userInput = userInput.toLowerCase();
             switch(userInput){
                 case "1":
-                    break;
+                    if(login()){
+                        break mainloop;
+                    }else{
+                        System.out.println("Login failed.\nReturning to login menu...\n");
+                        break;
+                    }
                 case "2":
                     if(signUp()){
                         break mainloop;
@@ -46,11 +51,12 @@ public class LoginMenu implements Menu {
             while (true) {
                 System.out.println("Enter a username: ");
                 userInput = scanner.nextLine();
-                if (userInput.toLowerCase().equals("exit")) {
+                if (userInput.toLowerCase().equals("x")) {
                     return false;
                 }
                 try {
                     UserService.validateUsername(userInput);
+                    UserService.checkAvailableUsername(userInput);
                     username = userInput;
                     break usernameloop;
                 } catch (InvalidUserException e) {
@@ -92,6 +98,52 @@ public class LoginMenu implements Menu {
                     case "x":
                         return false;
                 }
+            }
+        }
+    }
+
+    private boolean login(){
+        String username;
+        String password;
+        String userInput = "";
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            usernameloop:
+            while (true) {
+                System.out.println("Enter a username: ");
+                userInput = scanner.nextLine();
+                if (userInput.toLowerCase().equals("x")) {
+                    return false;
+                }
+                try {
+                    UserService.validateUsername(userInput);
+                    username = userInput;
+                    break usernameloop;
+                } catch (InvalidUserException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            passwordloop:
+            while (true) {
+                System.out.println("Enter a password: ");
+                userInput = scanner.nextLine();
+                if (userInput.toLowerCase().equals("x")) {
+                    return false;
+                }
+                try {
+                    UserService.validatePassword(userInput);
+                    password = userInput;
+                    break passwordloop;
+                } catch (InvalidUserException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+            try {
+                User user = UserService.validateLogin(username, password);
+                uiState.setUser(user);
+                return true;
+            } catch (InvalidUserException e){
+                System.out.println(e.getMessage());
             }
         }
     }

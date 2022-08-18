@@ -24,4 +24,20 @@ public class UserService {
     public static User getUserByUsername(String username) {
         return userDAO.getByKey(username);
     }
+
+    public static void checkAvailableUsername(String username) throws InvalidUserException {
+        //TODO change to a database call that just returns the username and not a whole user
+        if (userDAO.getByKey(username) != null){
+            throw new InvalidUserException("Username is already taken, please choose another.");
+        }
+    }
+
+    public static User validateLogin(String username, String password) {
+        User user = userDAO.getUserByUsernameAndPassword(username, password);
+        if(user == null){
+            //TODO tell why unsuccessful.
+            throw new InvalidUserException("Login unsuccessful. Please check username and password.");
+        }
+        return user;
+    }
 }
