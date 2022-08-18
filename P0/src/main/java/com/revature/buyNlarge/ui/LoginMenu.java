@@ -29,7 +29,6 @@ public class LoginMenu implements Menu {
                         break;
                     }
                 case "x":
-                case "exit":
                     break mainloop;
                 default:
                     System.out.print("\nIncorrect Input. Try again.\n");
@@ -62,7 +61,7 @@ public class LoginMenu implements Menu {
             while (true) {
                 System.out.println("Enter a password: ");
                 userInput = scanner.nextLine();
-                if (userInput.toLowerCase().equals("exit")) {
+                if (userInput.toLowerCase().equals("x")) {
                     return false;
                 }
                 try {
@@ -82,13 +81,15 @@ public class LoginMenu implements Menu {
                     case "y":
                     case "yes":
                         System.out.println("Creating new user...");
-                        uiState.setUser(new User(username, password));
+                        User user = new User(username, password, false);
+                        UserService.resisterUser(user);
+                        uiState.setUser(user);
                         System.out.println("User created. Logging in...");
                         return true;
                     case "n":
                     case "no":
                         break confirmloop;
-                    case "exit":
+                    case "x":
                         return false;
                 }
             }
