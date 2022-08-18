@@ -13,12 +13,13 @@ public class UserDAO implements DAO<User> {
     @Override
     public void save(User user) {
         try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO users (username, password, isAdmin) VALUES (?, ?, ?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO users (username, password, \"isAdmin\") VALUES (?, ?, ?)");
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
             ps.setBoolean(3, user.isAdmin());
             ps.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new InvalidSQLException("An error occurred when tyring to save to the database.");
         }
     }
