@@ -139,4 +139,30 @@ public class ShipDAO implements DAO<Ship> {
         }
         return ships;
     }
+
+    public List<Ship> getAllAvailableShipsByShipyardID(String id) {
+        ArrayList<Ship> ships = new ArrayList<Ship>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ships WHERE ledger IS NULL AND location = ?");
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ArrayList<Component> components = new ArrayList<Component>();
+                PreparedStatement psc = connection.prepareStatement("SELECT * from components WHERE ship = ?");
+                psc.setString(1, rs.getString("id"));
+                ResultSet rsc = psc.executeQuery();
+                while (rsc.next()){
+                    components.add(new Component(ComponentTypeService.getComponentTypeByID(rsc.getString("type")), Condition.valueOf(rsc.getString("condition"))));
+                }
+                ships.add(new Ship(rs.getString("id"), rs.getString("name"), rs.getString("description"),
+                        ShipyardService.getShipyardByID(rs.getString("location")), rs.getBigDecimal("basePrice"),
+                        Condition.valueOf(rs.getString("condition")), ShipClassService.getShipClassByID(rs.getString("class")),
+                        rs.getString("ledger"), components));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return ships;
+    }
 }

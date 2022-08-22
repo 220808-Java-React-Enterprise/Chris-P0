@@ -1,21 +1,20 @@
 package com.revature.buyNlarge.ui;
 import com.revature.buyNlarge.models.Ship;
-import com.revature.buyNlarge.services.ShipService;
 import java.util.Arrays;
 import java.util.List;
 
 public class ShipsMenu implements Menu {
     private final UIState uiState;
-    public ShipsMenu(UIState uiState){
+    private final List<Ship> ships;
+    public ShipsMenu(UIState uiState, List<Ship> ships){
         this.uiState = uiState;
+        this.ships = ships;
     }
 
     @Override
     public void display() {
-        List<Ship> ships = ShipService.getAllAvailableShips();
         if(ships.size() == 0){
             System.out.println("No ships for sale. Returning to Main Menu...");
-            uiState.pushNavigator(new MainMenu(uiState));
         }
         loop: while (ships.size() > 0) {
             System.out.println("\nAvailable Ships:\n");

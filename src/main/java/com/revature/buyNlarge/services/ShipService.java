@@ -30,4 +30,8 @@ public class ShipService {
     public static void assignShipsToLedger(ArrayList<Ship> ships, Ledger ledger) {
         shipDAO.assignShipsToLedger(ships, ledger);
     }
+
+    public static List<Ship> getAllAvailableShipsByShipyardID(String id) {
+        return shipDAO.getAllAvailableShipsByShipyardID(id);
+    }
 }

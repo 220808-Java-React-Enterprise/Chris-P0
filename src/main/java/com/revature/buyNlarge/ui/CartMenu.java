@@ -60,7 +60,6 @@ public class CartMenu implements Menu {
                     LedgerService.registerLedger(new Ledger(UUID.randomUUID().toString(), uiState.getUser(), LocalDate.now(), sum, uiState.getCart()));
                     uiState.emptyCart();
                     System.out.println("Your account has been billed. Purchase successful. Returning to Main Menu...");
-                    uiState.pushNavigator(new MainMenu(uiState));
                     return true;
                 case "n":
                     return false;
@@ -87,6 +86,8 @@ public class CartMenu implements Menu {
          */
     }
     private boolean emptyCart(){
-        return false; //TODO finish
+         uiState.emptyCart();
+        System.out.println("Cart Emptied.");
+        return true;
     }
 }
