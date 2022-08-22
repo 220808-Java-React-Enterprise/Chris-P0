@@ -54,18 +54,28 @@ public class Ship {
     public List<Component> getComponents() {
         return components;
     }
-
+    private BigDecimal getTotalPrice() {
+        BigDecimal result = new BigDecimal(String.valueOf(basePrice));
+        result = result.multiply(BigDecimal.valueOf((condition.ordinal() + 1)/ (Condition.COUNT.ordinal() + 1)));
+        for(Component component : components){
+            result = result.add(component.getType().getBasePrice().multiply(BigDecimal.valueOf((component.getCondition().ordinal() + 1)/ (Condition.COUNT.ordinal() + 1))));
+        }
+        return result;
+    }
     @Override
     public String toString() {
-        return "Ship{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", shipyard=" + shipyard +
-                ", basePrice=" + basePrice +
-                ", condition=" + condition +
-                ", shipClass=" + shipClass +
-                ", components=" + components +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Ship ").append(id).append(":\n")
+                .append("\t").append(name).append('\n')
+                .append("\t").append(description).append('\n')
+                .append("\tLocated at ").append(shipyard.getName()).append('\n')
+                .append("\tPrice: ").append(getTotalPrice()).append(" Credits").append('\n')
+                .append("\t").append(condition.toString()).append(' ').append(shipClass.getName()).append("-class\n");
+        for(Component component : components){
+            sb.append("\t\t-").append(component.getCondition()).append(' ').append(component.getType().getName()).append('\n');
+        }
+        return sb.toString();
     }
+
+
 }
