@@ -10,9 +10,10 @@ public class Ship {
     private BigDecimal basePrice;
     private Condition condition;
     private ShipClass shipClass;
+    private String ledgerID;
     private List<Component> components;
 
-    public Ship(String id, String name, String description, Shipyard shipyard, BigDecimal basePrice, Condition condition, ShipClass shipClass, List<Component> components) {
+    public Ship(String id, String name, String description, Shipyard shipyard, BigDecimal basePrice, Condition condition, ShipClass shipClass, String ledgerID, List<Component> components) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -20,6 +21,7 @@ public class Ship {
         this.basePrice = basePrice;
         this.condition = condition;
         this.shipClass = shipClass;
+        this.ledgerID = ledgerID;
         this.components = components;
     }
 
@@ -51,10 +53,13 @@ public class Ship {
         return shipClass;
     }
 
+    public String getLedgerID() {
+        return ledgerID;
+    }
     public List<Component> getComponents() {
         return components;
     }
-    private BigDecimal getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         BigDecimal result = new BigDecimal(String.valueOf(basePrice));
         result = result.multiply(BigDecimal.valueOf((condition.ordinal() + 1)/ (Condition.COUNT.ordinal() + 1)));
         for(Component component : components){

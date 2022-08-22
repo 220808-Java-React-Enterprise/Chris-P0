@@ -4,6 +4,11 @@ public class Component {
     protected ComponentType type;
     protected Condition condition;
 
+    public Component(ComponentType type, Condition condition) {
+        this.type = type;
+        this.condition = condition;
+    }
+
     public ComponentType getType() {
         return type;
     }

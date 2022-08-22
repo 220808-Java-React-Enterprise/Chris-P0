@@ -1,7 +1,6 @@
 package com.revature.buyNlarge.daos;
 
-import com.revature.buyNlarge.models.ShipClass;
-import com.revature.buyNlarge.models.Shipyard;
+import com.revature.buyNlarge.models.*;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
 
@@ -12,10 +11,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShipClassDAO implements DAO<ShipClass> {
+public class ComponentTypeDAO implements DAO<ComponentType> {
 
     @Override
-    public void save(ShipClass shipClass) {
+    public void save(ComponentType componentType) {
         /**try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO ships (id, name, description, location, \"basePrice\", condition, class) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, ship.getID());
@@ -36,29 +35,25 @@ public class ShipClassDAO implements DAO<ShipClass> {
     }
 
     @Override
-    public void update(ShipClass obj) {}
+    public void update(ComponentType obj) {}
 
     @Override
     public void delete(String id) {}
 
-    private static HashMap<String, ShipClass> shipClassPool = new HashMap<String, ShipClass>();
+    private static HashMap<String, ComponentType> componentTypePool = new HashMap<String, ComponentType>();
     @Override
-    public ShipClass getByKey(String key) {
-        if(shipClassPool.containsKey(key)){
-            return shipClassPool.get(key);
+    public ComponentType getByKey(String key) {
+        if(componentTypePool.containsKey(key)){
+            return componentTypePool.get(key);
         }
         try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"shipClasses\" WHERE id = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"componentTypes\" WHERE id = ?");
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ShipClass shipClass =  new ShipClass(rs.getString("id"), rs.getString("name"), rs.getString("description"),
-                        rs.getInt("engineMaxSize"), rs.getInt("engineMinSize"), rs.getInt("smallHardPoints"),
-                        rs.getInt("mediumHardPoints"), rs.getInt("largeHardPoints"), rs.getInt("smallAuxPoints"),
-                        rs.getInt("mediumAuxPoints"), rs.getInt("largeAuxPoints"), rs.getInt("cabins"),
-                        rs.getInt("bays"));
-                shipClassPool.put(key, shipClass);
-                return shipClass;
+                ComponentType componentType =  new ComponentType(rs.getString("id"), rs.getString("name"), rs.getString("description"), ComponentClass.valueOf(rs.getString("class")), rs.getInt("size"), rs.getBigDecimal("basePrice"));
+                componentTypePool.put(key, componentType);
+                return componentType;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,7 +63,7 @@ public class ShipClassDAO implements DAO<ShipClass> {
     }
 
     @Override
-    public List<ShipClass> getAll() {
+    public List<ComponentType> getAll() {
         return null;
     }
 }

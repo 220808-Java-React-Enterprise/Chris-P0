@@ -12,9 +12,13 @@ public class ShipsMenu implements Menu {
 
     @Override
     public void display() {
-        List<Ship> ships = ShipService.getAllShips();
-        loop: while (true) {
-            System.out.println();
+        List<Ship> ships = ShipService.getAllAvailableShips();
+        if(ships.size() == 0){
+            System.out.println("No ships for sale. Returning to Main Menu...");
+            uiState.pushNavigator(new MainMenu(uiState));
+        }
+        loop: while (ships.size() > 0) {
+            System.out.println("\nAvailable Ships:\n");
             for(int i = 0; i < ships.size(); i++){
                 System.out.print("[" + (i + 1) + "] ");
                 System.out.println(ships.get(i));
@@ -36,7 +40,7 @@ public class ShipsMenu implements Menu {
                     case "y":
                         break keepshoppingloop;
                     case "n":
-                        uiState.pushNavigator(new CheckoutMenu(uiState));
+                        uiState.pushNavigator(new CartMenu(uiState));
                         break loop;
                     case "x":
                         break loop;

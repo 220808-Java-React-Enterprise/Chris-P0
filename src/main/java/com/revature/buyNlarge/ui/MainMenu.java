@@ -19,8 +19,6 @@ public class MainMenu implements Menu {
                     Arrays.asList("1", "2", "3", "4", "5", "x"))){
                 case "1": //Ships
                     uiState.pushNavigator(new ShipsMenu(uiState));
-                    //TODO: Remove this
-                    //System.out.println(UUID.randomUUID().toString());
                     break loop;
                 case "2": //Shipyards
                     break;
