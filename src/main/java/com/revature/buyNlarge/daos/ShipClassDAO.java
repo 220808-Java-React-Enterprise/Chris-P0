@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -69,6 +70,21 @@ public class ShipClassDAO implements DAO<ShipClass> {
 
     @Override
     public List<ShipClass> getAll() {
-        return null;
+        ArrayList<ShipClass> shipClasses = new ArrayList<ShipClass>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"shipClasses\"");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                shipClasses.add(new ShipClass(rs.getString("id"), rs.getString("name"), rs.getString("description"),
+                        rs.getInt("engineMaxSize"), rs.getInt("engineMinSize"), rs.getInt("smallHardPoints"),
+                        rs.getInt("mediumHardPoints"), rs.getInt("largeHardPoints"), rs.getInt("smallAuxPoints"),
+                        rs.getInt("mediumAuxPoints"), rs.getInt("largeAuxPoints"), rs.getInt("cabins"),
+                        rs.getInt("bays")));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return shipClasses;
     }
 }

@@ -2,6 +2,8 @@ package com.revature.buyNlarge.services;
 import com.revature.buyNlarge.daos.ShipyardDAO;
 import com.revature.buyNlarge.models.Shipyard;
 
+import java.util.List;
+
 public class ShipyardService {
     private static final ShipyardDAO shipyardDAO = new ShipyardDAO();
 
@@ -15,5 +17,9 @@ public class ShipyardService {
 
     public static boolean isShipyardRegistered(String id){
         return shipyardDAO.getByKey(id) != null;
+    }
+
+    public static List<Shipyard> getAllShipyards(){
+        return shipyardDAO.getAll();
     }
 }

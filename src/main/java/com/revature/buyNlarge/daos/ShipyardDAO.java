@@ -1,6 +1,9 @@
 package com.revature.buyNlarge.daos;
 
 import com.revature.buyNlarge.models.*;
+import com.revature.buyNlarge.services.ComponentTypeService;
+import com.revature.buyNlarge.services.ShipClassService;
+import com.revature.buyNlarge.services.ShipyardService;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
 
@@ -58,6 +61,17 @@ public class ShipyardDAO implements DAO<Shipyard> {
 
     @Override
     public List<Shipyard> getAll() {
-        return null;
+        ArrayList<Shipyard> shipyards = new ArrayList<Shipyard>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM shipyards");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                shipyards.add(new Shipyard(rs.getString("id"), rs.getString("name"), rs.getString("description"), rs.getString("locationFormula")));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return shipyards;
     }
 }
