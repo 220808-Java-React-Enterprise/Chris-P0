@@ -65,10 +65,10 @@ public class LedgerDAO implements DAO<Ledger> {
         return null;
     }
 
-    public ArrayList<Ledger> getLedgerByUsername(String username) {
+    public ArrayList<Ledger> getLedgersByUsername(String username) {
         ArrayList<Ledger> ledgers = new ArrayList<Ledger>();
         try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ledgers WHERE username = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ledgers WHERE username = ? ORDER BY date");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){

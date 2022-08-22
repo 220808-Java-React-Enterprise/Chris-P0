@@ -24,7 +24,7 @@ public class CartMenu implements Menu {
             System.out.println();
             for (int i = 0; i < ships.size(); i++) {
                 System.out.print("[" + (i + 1) + "] ");
-                System.out.println(ships.get(i));
+                System.out.print(ships.get(i));
             }
             optionsloop: while (true) {
                 switch (Menu.prompt("\nCart Menu\n[1] Checkout\n[2] Remove Items\n[3] Empty Cart\n[x] Exit\n\nChoose an option: ",

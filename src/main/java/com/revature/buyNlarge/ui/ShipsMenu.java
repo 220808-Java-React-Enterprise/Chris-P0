@@ -20,7 +20,7 @@ public class ShipsMenu implements Menu {
             System.out.println("\nAvailable Ships:\n");
             for(int i = 0; i < ships.size(); i++){
                 System.out.print("[" + (i + 1) + "] ");
-                System.out.println(ships.get(i));
+                System.out.print(ships.get(i));
             }
             selectloop: while(true) {
                 String userInput = Menu.prompt("\nSelect a Ship to add to cart: ");

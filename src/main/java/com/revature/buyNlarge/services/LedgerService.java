@@ -20,7 +20,7 @@ public class LedgerService {
         return ledgerDAO.getByKey(id) != null;
     }
 
-    public static ArrayList<Ledger> getLedgerByUsername(String username) {
-        return ledgerDAO.getLedgerByUsername(username);
+    public static ArrayList<Ledger> getLedgersByUsername(String username) {
+        return ledgerDAO.getLedgersByUsername(username);
     }
 }

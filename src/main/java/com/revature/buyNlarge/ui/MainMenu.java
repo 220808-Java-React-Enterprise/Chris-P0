@@ -32,7 +32,7 @@ public class MainMenu implements Menu {
                     break;
                 case "4": //My Information
                     uiState.pushNavigator(this);
-                    uiState.pushNavigator(new OrderHistoryMenu(uiState));
+                    uiState.pushNavigator(new OrderHistoryMenu(uiState, uiState.getUser()));
                     break loop;
                 case "5": //Settings
                     break;

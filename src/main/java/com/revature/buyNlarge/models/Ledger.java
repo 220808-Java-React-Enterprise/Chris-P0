@@ -2,7 +2,6 @@ package com.revature.buyNlarge.models;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Ledger {
     private String id;
