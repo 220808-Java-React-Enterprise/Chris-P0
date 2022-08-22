@@ -53,7 +53,7 @@ public class ShipDAO implements DAO<Ship> {
     public Ship getByKey(String key) {
         try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
             ArrayList<Component> components = new ArrayList<Component>();
-            PreparedStatement ps = connection.prepareStatement("SELECT id from components WHERE ship = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT ship from components WHERE ship = ?");
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){

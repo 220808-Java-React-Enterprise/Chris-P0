@@ -1,5 +1,6 @@
 package com.revature.buyNlarge.models;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class Ship {
@@ -60,10 +61,9 @@ public class Ship {
         return components;
     }
     public BigDecimal getTotalPrice() {
-        BigDecimal result = new BigDecimal(String.valueOf(basePrice));
-        result = result.multiply(BigDecimal.valueOf((condition.ordinal() + 1)/ (Condition.COUNT.ordinal() + 1)));
+        BigDecimal result = basePrice.multiply(BigDecimal.valueOf((double)condition.ordinal() / (double)Condition.COUNT.ordinal()));
         for(Component component : components){
-            result = result.add(component.getType().getBasePrice().multiply(BigDecimal.valueOf((component.getCondition().ordinal() + 1)/ (Condition.COUNT.ordinal() + 1))));
+            result = result.add(component.getType().getBasePrice().multiply(BigDecimal.valueOf((double)component.getCondition().ordinal() / (double)Condition.COUNT.ordinal())));
         }
         return result;
     }
@@ -74,8 +74,8 @@ public class Ship {
                 .append("\t").append(name).append('\n')
                 .append("\t").append(description).append('\n')
                 .append("\tLocated at ").append(shipyard.getName()).append('\n')
-                .append("\tPrice: ").append(getTotalPrice()).append(" Credits").append('\n')
-                .append("\t").append(condition.toString()).append(' ').append(shipClass.getName()).append("-class\n");
+                .append("\tPrice: ").append(NumberFormat.getCurrencyInstance().format(getTotalPrice())).append('\n')
+                .append("\t").append(condition.toString()).append("-quality ").append(shipClass.getName()).append("-class\n");
         for(Component component : components){
             sb.append("\t\t-").append(component.getCondition()).append(' ').append(component.getType().getName()).append('\n');
         }

@@ -31,7 +31,8 @@ public class MainMenu implements Menu {
                 case "3": //Users
                     break;
                 case "4": //My Information
-                    break;
+                    uiState.pushNavigator(new OrderHistoryMenu(uiState));
+                    break loop;
                 case "5": //Settings
                     break;
                 case "x": //Exit

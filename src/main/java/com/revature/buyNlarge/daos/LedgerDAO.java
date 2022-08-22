@@ -1,12 +1,7 @@
 package com.revature.buyNlarge.daos;
 
-import com.revature.buyNlarge.models.Component;
-import com.revature.buyNlarge.models.Ledger;
-import com.revature.buyNlarge.models.Ship;
-import com.revature.buyNlarge.models.Shipyard;
-import com.revature.buyNlarge.services.ComponentService;
-import com.revature.buyNlarge.services.ShipService;
-import com.revature.buyNlarge.services.UserService;
+import com.revature.buyNlarge.models.*;
+import com.revature.buyNlarge.services.*;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
 
@@ -68,5 +63,28 @@ public class LedgerDAO implements DAO<Ledger> {
     @Override
     public List<Ledger> getAll() {
         return null;
+    }
+
+    public ArrayList<Ledger> getLedgerByUsername(String username) {
+        ArrayList<Ledger> ledgers = new ArrayList<Ledger>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ledgers WHERE username = ?");
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ArrayList<Ship> ships = new ArrayList<Ship>();
+                PreparedStatement shipPrepredStatement = connection.prepareStatement("SELECT id from ships WHERE ledger = ?");
+                shipPrepredStatement.setString(1, rs.getString("id"));
+                ResultSet shipResultSet = shipPrepredStatement.executeQuery();
+                while (shipResultSet.next()){
+                    ships.add(ShipService.getShipByID(shipResultSet.getString("id")));
+                }
+                ledgers.add(new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDate.class), rs.getBigDecimal("totalPrice"), ships));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return ledgers;
     }
 }

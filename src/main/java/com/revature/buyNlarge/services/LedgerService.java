@@ -3,6 +3,8 @@ package com.revature.buyNlarge.services;
 import com.revature.buyNlarge.daos.LedgerDAO;
 import com.revature.buyNlarge.models.Ledger;
 
+import java.util.ArrayList;
+
 public class LedgerService {
     private static final LedgerDAO ledgerDAO = new LedgerDAO();
 
@@ -16,5 +18,9 @@ public class LedgerService {
 
     public static boolean isLedgerRegistered(String id){
         return ledgerDAO.getByKey(id) != null;
+    }
+
+    public static ArrayList<Ledger> getLedgerByUsername(String username) {
+        return ledgerDAO.getLedgerByUsername(username);
     }
 }
