@@ -32,4 +32,8 @@ public class ShipService {
     public static List<Ship> getAllAvailableShipsByShipyardID(String id) {
         return shipDAO.getAllAvailableShipsByShipyardID(id);
     }
+
+    public static void updateShip(Ship ship) {
+        shipDAO.update(ship);
+    }
 }

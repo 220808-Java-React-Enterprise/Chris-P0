@@ -1,4 +1,5 @@
 package com.revature.buyNlarge.ui;
+import com.revature.buyNlarge.models.Component;
 import com.revature.buyNlarge.models.Ledger;
 import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.models.User;
@@ -35,6 +36,9 @@ public class UserDetailsMenu implements Menu {
                         .append("\t\t\tLocated at ").append(ship.getShipyard().getName()).append('\n')
                         .append("\t\t\tPrice: ").append(NumberFormat.getCurrencyInstance().format(ship.getTotalPrice())).append('\n')
                         .append("\t\t\t").append(ship.getCondition().toString()).append("-quality ").append(ship.getShipClass().getName()).append("-class\n");
+                for(Component component : ship.getComponents()){
+                    sb.append("\t\t\t\t<> ").append(component.getCondition()).append("-quality ").append(component.getType().getName()).append('\n');
+                }
             }
             sb.append("\tTotal: ").append(NumberFormat.getCurrencyInstance().format(ledger.getTotalPrice())).append('\n');
             System.out.println(sb);

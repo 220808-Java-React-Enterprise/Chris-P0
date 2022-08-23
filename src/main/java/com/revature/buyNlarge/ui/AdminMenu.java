@@ -26,20 +26,18 @@ public class AdminMenu implements Menu {
                             System.out.print("[" + (i + 1) + "] ");
                             System.out.println(ships.get(i));
                         }
-                        selectloop: while(true) {
-                            String userInput = Menu.prompt("\nSelect a ship to edit: ");
-                            if(userInput.equals("x")){
-                                break loop2;
+                        String userInput = Menu.prompt("\nSelect a ship to edit: ");
+                        if(userInput.equals("x")){
+                            break loop2;
+                        }
+                        try {
+                            int userInt = Integer.parseInt(userInput) - 1;
+                            if ((userInt < ships.size()) && (userInt >= 0)) {
+                                Ship ship = editShip(ships.get(userInt));
+                                if(ship != null) ShipService.updateShip(ship);
                             }
-                            try {
-                                int userInt = Integer.parseInt(userInput) - 1;
-                                if ((userInt < ships.size()) && (userInt >= 0)) {
-                                    Ship ship = editShip(ships.get(userInt));
-                                    if(ship != null) ShipService.registerShip(ship);
-                                }
-                            }catch(NumberFormatException e){
-                                System.out.println("Invalid input.");
-                            }
+                        }catch(NumberFormatException e){
+                            System.out.println("Invalid input.");
                         }
                     }
                     break;
@@ -79,8 +77,6 @@ public class AdminMenu implements Menu {
     }
 
     private void addShip(){
-        String id = getID();
-        if(id == null) return;
         String name = Menu.prompt("Enter a name for the ship: ", false);
         if(name.equals("x")) return;
         String description = Menu.prompt("Enter a description for the ship: ", false);
@@ -93,10 +89,9 @@ public class AdminMenu implements Menu {
         if(condition == null) return;
         ShipClass shipClass = getShipClass();
         if(shipClass == null) return;
-        String ledgerID = null;
         List<Component> components = getComponents();
         if(components == null) return;
-        Ship ship = new Ship(id, name, description, shipyard, basePrice, condition, shipClass, ledgerID,components);
+        Ship ship = new Ship(UUID.randomUUID().toString(), name, description, shipyard, basePrice, condition, shipClass, null ,components);
         loop: while(true) {
             switch (Menu.prompt("\n" + ship + "\nIs this correct? (y/n): ", Arrays.asList("y", "n", "x"))) {
                 case "y":
@@ -108,17 +103,6 @@ public class AdminMenu implements Menu {
                 case "x":
                     return;
             }
-        }
-    }
-
-    private String getID() {
-        String userInput = Menu.prompt("Enter an id for the ship or nothing to automatically generate an id: ");
-        if (userInput.equals("x")) {
-            return null;
-        } else if (userInput.equals("")) {
-            return UUID.randomUUID().toString();
-        } else {
-            return userInput;
         }
     }
 
@@ -234,7 +218,41 @@ public class AdminMenu implements Menu {
     }
 
     private Ship editShip(Ship ship){
-        //TODO
-        return null;
+        loop: while(true) {
+            switch (Menu.prompt( "[1] Name\n[2] Description\n[3] Shipyard\n[4] Base Price\n[5] Condition\n[6] Ship Class\n[7] Components\nSelect a attribute to edit or 'x' to finish: ",
+                    Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "x"))) {
+                case "1": //Name
+                    String name = Menu.prompt("Enter a name for the ship: ", false);
+                    if(!name.equals("x")) ship.setName(name);
+                    break;
+                case "2": //Description
+                    String description = Menu.prompt("Enter a description for the ship: ", false);
+                    if(!description.equals("x")) ship.setDescription(description);
+                    break;
+                case "3": //Shipyard
+                    Shipyard shipyard = getShipyard();
+                    if(shipyard != null) ship.setShipyard(shipyard);
+                    break;
+                case "4": //Base Price
+                    BigDecimal basePrice = getPrice();
+                    if(basePrice != null) ship.setBasePrice(basePrice);
+                    break;
+                case "5": //Condition
+                    Condition condition = getCondition("ship");
+                    if(condition != null) ship.setCondition(condition);
+                    break;
+                case "6": //Ship Class
+                    ShipClass shipClass = getShipClass();
+                    if(shipClass != null) ship.setShipClass(shipClass);
+                    break;
+                case "7": //Component
+                    List<Component> components = getComponents();
+                    if(components != null) ship.setComponents(components);
+                    break;
+                case "x":
+                    break loop;
+            }
+        }
+        return ship;
     }
 }

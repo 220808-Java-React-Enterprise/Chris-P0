@@ -61,12 +61,49 @@ public class Ship {
         return components;
     }
     public BigDecimal getTotalPrice() {
-        BigDecimal result = basePrice.multiply(BigDecimal.valueOf((double)condition.ordinal() / (double)Condition.COUNT.ordinal()));
+        BigDecimal result = basePrice.multiply(BigDecimal.valueOf((double)condition.ordinal() / (double)(Condition.COUNT.ordinal() - 1)));
         for(Component component : components){
-            result = result.add(component.getType().getBasePrice().multiply(BigDecimal.valueOf((double)component.getCondition().ordinal() / (double)Condition.COUNT.ordinal())));
+            result = result.add(component.getType().getBasePrice().multiply(BigDecimal.valueOf((double)component.getCondition().ordinal() / (double)(Condition.COUNT.ordinal() - 1))));
         }
         return result;
     }
+
+    public void setID(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setShipyard(Shipyard shipyard) {
+        this.shipyard = shipyard;
+    }
+
+    public void setBasePrice(BigDecimal basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    public void setShipClass(ShipClass shipClass) {
+        this.shipClass = shipClass;
+    }
+
+    public void setLedgerID(String ledgerID) {
+        this.ledgerID = ledgerID;
+    }
+
+    public void setComponents(List<Component> components) {
+        this.components = components;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -77,7 +114,7 @@ public class Ship {
                 .append("\tPrice: ").append(NumberFormat.getCurrencyInstance().format(getTotalPrice())).append('\n')
                 .append("\t").append(condition.toString()).append("-quality ").append(shipClass.getName()).append("-class\n");
         for(Component component : components){
-            sb.append("\t\t-").append(component.getCondition()).append(' ').append(component.getType().getName()).append('\n');
+            sb.append("\t\t<> ").append(component.getCondition()).append("-quality ").append(component.getType().getName()).append('\n');
         }
         return sb.toString();
     }

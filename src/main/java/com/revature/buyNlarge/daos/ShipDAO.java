@@ -42,7 +42,36 @@ public class ShipDAO implements DAO<Ship> {
     }
 
     @Override
-    public void update(Ship obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
+    public void update(Ship ship) {
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("UPDATE ships SET name = ?, description = ?, location = ?, \"basePrice\" = ?, condition = ?, class = ?, ledger = ? WHERE id = ?");
+            ps.setString(1, ship.getName());
+            ps.setString(2, ship.getDescription());
+            if(!ShipyardService.isShipyardRegistered(ship.getShipyard().getID())){
+                ShipyardService.registerShipyard(ship.getShipyard());
+            }
+            ps.setString(3, ship.getShipyard().getID());
+            ps.setBigDecimal(4, ship.getBasePrice());
+            ps.setObject(5, ship.getCondition().name(), java.sql.Types.OTHER);
+            if(!ShipClassService.isShipClassRegistered(ship.getShipClass().getID())){
+                ShipClassService.registerShipClass(ship.getShipClass());
+            }
+            ps.setString(6, ship.getShipClass().getID());
+            if(ship.getLedgerID() == null) {
+                ps.setNull(7, Types.VARCHAR);
+            }else{
+                ps.setString(7, ship.getLedgerID());
+            }
+            ps.setString(8, ship.getID());
+            ps.executeUpdate();
+            for(Component component : ship.getComponents()){
+                ComponentService.registerComponent(component, ship.getID());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        }
+    }
 
     @Override
     public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
@@ -51,7 +80,7 @@ public class ShipDAO implements DAO<Ship> {
     public Ship getByKey(String key) {
         try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
             ArrayList<Component> components = new ArrayList<Component>();
-            PreparedStatement ps = connection.prepareStatement("SELECT ship from components WHERE ship = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * from components WHERE ship = ?");
             ps.setString(1, key);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
