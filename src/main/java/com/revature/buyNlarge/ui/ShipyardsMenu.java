@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ShipyardsMenu implements Menu {
-    //TODO order history of location
     private final UIState uiState;
     public ShipyardsMenu(UIState uiState){
         this.uiState = uiState;
