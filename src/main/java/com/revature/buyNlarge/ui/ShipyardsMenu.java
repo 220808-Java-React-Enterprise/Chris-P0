@@ -2,6 +2,8 @@ package com.revature.buyNlarge.ui;
 import com.revature.buyNlarge.models.Shipyard;
 import com.revature.buyNlarge.services.ShipService;
 import com.revature.buyNlarge.services.ShipyardService;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class ShipyardsMenu implements Menu {
@@ -33,9 +35,21 @@ public class ShipyardsMenu implements Menu {
                     int userInt = Integer.parseInt(userInput) - 1;
                     if ((userInt < shipyards.size()) && (userInt >= 0)) {
                         System.out.println(shipyards.get(userInt));
-                        uiState.pushNavigator(this);
-                        uiState.pushNavigator(new ShipsMenu(uiState, ShipService.getAllAvailableShipsByShipyardID(shipyards.get(userInt).getID())));
-                        break loop;
+                         choice: while(true){
+                            switch(Menu.prompt("\n[1] View Orders at Location\n[2] View available ships at Location\n[x] Exit\nSelect an option: ",
+                                    Arrays.asList("1", "2", "x"))){
+                                case "1":
+                                    uiState.pushNavigator(this);
+                                    uiState.pushNavigator(new ShipyardDetailsMenu(uiState, shipyards.get(userInt)));
+                                    break loop;
+                                case "2":
+                                    uiState.pushNavigator(this);
+                                    uiState.pushNavigator(new ShipsMenu(uiState, ShipService.getAllAvailableShipsByShipyardID(shipyards.get(userInt).getID())));
+                                    break loop;
+                                case "3":
+                                    break loop;
+                            }
+                        }
                     }
                 }catch(NumberFormatException e){
                     System.out.println("Invalid input.");

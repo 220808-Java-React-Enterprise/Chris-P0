@@ -2,6 +2,7 @@ package com.revature.buyNlarge.services;
 import com.revature.buyNlarge.daos.LedgerDAO;
 import com.revature.buyNlarge.models.Ledger;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LedgerService {
     private static final LedgerDAO ledgerDAO = new LedgerDAO();
@@ -20,5 +21,9 @@ public class LedgerService {
 
     public static ArrayList<Ledger> getLedgersByUsername(String username) {
         return ledgerDAO.getLedgersByUsername(username);
+    }
+
+    public static List<Ledger> getLedgersByShipyardID(String id) {
+        return ledgerDAO.getLedgersByShipyardID(id);
     }
 }

@@ -1,9 +1,8 @@
 package com.revature.buyNlarge.ui;
-import com.revature.buyNlarge.models.Component;
-import com.revature.buyNlarge.models.Ledger;
-import com.revature.buyNlarge.models.Ship;
-import com.revature.buyNlarge.models.User;
+
+import com.revature.buyNlarge.models.*;
 import com.revature.buyNlarge.services.LedgerService;
+
 import java.text.NumberFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -11,18 +10,18 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-public class UserDetailsMenu implements Menu {
+public class ShipyardDetailsMenu implements Menu {
     private final UIState uiState;
-    public final User user;
-    public UserDetailsMenu(UIState uiState, User user) {
+    public final Shipyard shipyard;
+    public ShipyardDetailsMenu(UIState uiState, Shipyard shipyard) {
         this.uiState = uiState;
-        this.user = user;
+        this.shipyard = shipyard;
     }
 
     @Override
     public void display() {
-        System.out.println('\n' + user.toString());
-        List<Ledger> ledgers = LedgerService.getLedgersByUsername(user.getUsername());
+        System.out.println('\n' + shipyard.toString());
+        List<Ledger> ledgers = LedgerService.getLedgersByShipyardID(shipyard.getID());
         if(ledgers.size() == 0){
             System.out.println("No order history for this user available.\n\n");
         }

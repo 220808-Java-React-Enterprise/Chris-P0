@@ -43,11 +43,9 @@ public class Shipyard{
 
     @Override
     public String toString() {
-        return "Shipyard{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "Shipyard " + id + '\n' +
+                name + '\n' +
+                description + '\n' +
+                "Galactic Address: " + address + '\n';
     }
 }

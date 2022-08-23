@@ -34,7 +34,6 @@ public class UserService {
     }
 
     public static void checkAvailableUsername(String username) throws InvalidUserException {
-        //TODO change to a database call that just returns the username and not a whole user
         if (userDAO.getByKey(username) != null){
             throw new InvalidUserException("Username is already taken, please choose another.");
         }

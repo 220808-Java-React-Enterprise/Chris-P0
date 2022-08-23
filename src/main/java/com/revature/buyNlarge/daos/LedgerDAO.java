@@ -83,4 +83,29 @@ public class LedgerDAO implements DAO<Ledger> {
         }
         return ledgers;
     }
+
+    public List<Ledger> getLedgersByShipyardID(String id) {
+        ArrayList<Ledger> ledgers = new ArrayList<Ledger>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM ledgers ORDER BY date");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                ArrayList<Ship> ships = new ArrayList<Ship>();
+                PreparedStatement shipPrepredStatement = connection.prepareStatement("SELECT id from ships WHERE ledger = ? AND location = ?");
+                shipPrepredStatement.setString(1, rs.getString("id"));
+                shipPrepredStatement.setString(2, id);
+                ResultSet shipResultSet = shipPrepredStatement.executeQuery();
+                while (shipResultSet.next()) {
+                    ships.add(ShipService.getShipByID(shipResultSet.getString("id")));
+                }
+                if (!ships.isEmpty()) {
+                    ledgers.add(new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDateTime.class), rs.getBigDecimal("totalPrice"), ships));
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return ledgers;
+    }
 }
