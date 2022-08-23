@@ -54,6 +54,7 @@ public class LoginMenu implements Menu {
                 User user = UserService.validateLogin(username, password);
                 System.out.println("Logging in...");
                 uiState.setUser(user);
+                uiState.pushNavigator(this);
                 uiState.pushNavigator(new MainMenu(uiState));
                 return true;
             } catch (InvalidUserException e){
@@ -92,6 +93,7 @@ public class LoginMenu implements Menu {
                         User user = new User(username, password, false);
                         UserService.resisterUser(user);
                         uiState.setUser(user);
+                        uiState.pushNavigator(this);
                         uiState.pushNavigator(new MainMenu(uiState));
                         System.out.println("User created. Logging in...");
                         return true;

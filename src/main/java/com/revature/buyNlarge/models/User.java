@@ -25,10 +25,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", isAdmin='" + isAdmin + '\'' +
-                '}';
+        return (isAdmin ? "Admin " : "") + username;
     }
 }

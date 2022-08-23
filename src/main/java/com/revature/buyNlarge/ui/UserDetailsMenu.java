@@ -1,25 +1,28 @@
 package com.revature.buyNlarge.ui;
-
 import com.revature.buyNlarge.models.Ledger;
 import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.models.User;
 import com.revature.buyNlarge.services.LedgerService;
-
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Scanner;
 
-public class OrderHistoryMenu implements Menu {
+public class UserDetailsMenu implements Menu {
     private final UIState uiState;
     public final User user;
-    public OrderHistoryMenu(UIState uiState, User user) {
+    public UserDetailsMenu(UIState uiState, User user) {
         this.uiState = uiState;
         this.user = user;
     }
 
     @Override
     public void display() {
-        for (Ledger ledger : LedgerService.getLedgersByUsername(user.getUsername())) {
+        System.out.println('\n' + user.toString());
+        List<Ledger> ledgers = LedgerService.getLedgersByUsername(user.getUsername());
+        if(ledgers.size() == 0){
+            System.out.println("No order history for this user available.\n\n");
+        }
+        for (Ledger ledger : ledgers) {
             StringBuilder sb = new StringBuilder();
             sb.append("Ledger ").append(ledger.getID()).append('\n')
                     .append('\t').append(ledger.getDate()).append(" ").append(ledger.getUser().getUsername()).append('\n');

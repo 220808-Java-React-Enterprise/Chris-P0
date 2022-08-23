@@ -3,6 +3,8 @@ import com.revature.buyNlarge.daos.UserDAO;
 import com.revature.buyNlarge.models.User;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidUserException;
 
+import java.util.List;
+
 public class UserService {
     private static final UserDAO userDAO = new UserDAO();
     public static void validateUsername(String username) throws InvalidUserException {
@@ -39,5 +41,9 @@ public class UserService {
             throw new InvalidUserException("Login unsuccessful. Please check username and password.");
         }
         return user;
+    }
+
+    public static List<User> getAllUsers() {
+        return userDAO.getAll();
     }
 }
