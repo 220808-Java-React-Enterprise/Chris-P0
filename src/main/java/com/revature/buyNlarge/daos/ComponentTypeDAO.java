@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,5 +46,18 @@ public class ComponentTypeDAO implements DAO<ComponentType> {
     }
 
     @Override
-    public List<ComponentType> getAll() {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
+    public List<ComponentType> getAll() {
+        List<ComponentType> componentTypes = new ArrayList<>();
+        try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM \"componentTypes\"");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                componentTypes.add(new ComponentType(rs.getString("id"), rs.getString("name"), rs.getString("description"), ComponentClass.valueOf(rs.getString("class")), rs.getInt("size"), rs.getBigDecimal("basePrice")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new InvalidSQLException("An error occurred when tyring to read from the database.");
+        }
+        return componentTypes;
+    }
 }

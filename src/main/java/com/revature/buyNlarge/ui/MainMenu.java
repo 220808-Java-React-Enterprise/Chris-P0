@@ -36,12 +36,9 @@ public class MainMenu implements Menu {
                     uiState.pushNavigator(new CartMenu(uiState));
                     break loop;
                 case "6": //Admin Options
-                    //TODO Remove this and finish this option
-                    //System.out.println(UUID.randomUUID().toString());
-                    for(int i = 0; i < 10; i++){
-                        ShipFactory.createRandomShip();
-                    }
-                    break;
+                    uiState.pushNavigator(this);
+                    uiState.pushNavigator(new AdminMenu(uiState));
+                    break loop;
                 case "x": //Sign Out
                     System.out.println("Signing out...");
                     uiState.setUser(null);

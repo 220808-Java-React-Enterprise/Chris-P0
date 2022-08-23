@@ -18,6 +18,7 @@ public class UserDetailsMenu implements Menu {
 
     @Override
     public void display() {
+        //TODO sorting options
         System.out.println('\n' + user.toString());
         List<Ledger> ledgers = LedgerService.getLedgersByUsername(user.getUsername());
         if(ledgers.size() == 0){

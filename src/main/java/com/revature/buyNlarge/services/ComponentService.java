@@ -1,6 +1,9 @@
 package com.revature.buyNlarge.services;
 import com.revature.buyNlarge.daos.ComponentDAO;
 import com.revature.buyNlarge.models.Component;
+import com.revature.buyNlarge.models.ShipClass;
+
+import java.util.List;
 
 public class ComponentService {
     private static final ComponentDAO componentDAO = new ComponentDAO();
@@ -19,4 +22,5 @@ public class ComponentService {
     public static boolean isComponentRegistered(String id){
         return componentDAO.getByKey(id) != null;
     }
+
 }

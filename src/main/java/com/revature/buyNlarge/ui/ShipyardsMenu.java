@@ -5,6 +5,7 @@ import com.revature.buyNlarge.services.ShipyardService;
 import java.util.List;
 
 public class ShipyardsMenu implements Menu {
+    //TODO order history of location
     private final UIState uiState;
     public ShipyardsMenu(UIState uiState){
         this.uiState = uiState;
@@ -28,12 +29,16 @@ public class ShipyardsMenu implements Menu {
                 if(userInput.equals("x")){
                     break loop;
                 }
-                int userInt = Integer.parseInt(userInput) - 1;
-                if ((userInt < shipyards.size()) && (userInt >= 0)) {
-                    System.out.println(shipyards.get(userInt));
-                    uiState.pushNavigator(this);
-                    uiState.pushNavigator(new ShipsMenu(uiState, ShipService.getAllAvailableShipsByShipyardID(shipyards.get(userInt).getID())));
-                    break loop;
+                try{
+                    int userInt = Integer.parseInt(userInput) - 1;
+                    if ((userInt < shipyards.size()) && (userInt >= 0)) {
+                        System.out.println(shipyards.get(userInt));
+                        uiState.pushNavigator(this);
+                        uiState.pushNavigator(new ShipsMenu(uiState, ShipService.getAllAvailableShipsByShipyardID(shipyards.get(userInt).getID())));
+                        break loop;
+                    }
+                }catch(NumberFormatException e){
+                    System.out.println("Invalid input.");
                 }
             }
         }
