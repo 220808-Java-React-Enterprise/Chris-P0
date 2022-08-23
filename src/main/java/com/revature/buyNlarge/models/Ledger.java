@@ -1,16 +1,16 @@
 package com.revature.buyNlarge.models;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Ledger {
     private String id;
     private User user;
-    private LocalDate date;
+    private LocalDateTime date;
     private BigDecimal totalPrice;
     private ArrayList<Ship> ledgerItems;
 
-    public Ledger(String id, User user, LocalDate date, BigDecimal totalPrice, ArrayList<Ship> ledgerItems) {
+    public Ledger(String id, User user, LocalDateTime date, BigDecimal totalPrice, ArrayList<Ship> ledgerItems) {
         this.id = id;
         this.user = user;
         this.date = date;
@@ -26,7 +26,7 @@ public class Ledger {
         return user;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

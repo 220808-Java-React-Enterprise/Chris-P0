@@ -4,6 +4,7 @@ import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.models.User;
 import com.revature.buyNlarge.services.LedgerService;
 import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class UserDetailsMenu implements Menu {
         for (Ledger ledger : ledgers) {
             StringBuilder sb = new StringBuilder();
             sb.append("Ledger ").append(ledger.getID()).append('\n')
-                    .append('\t').append(ledger.getDate()).append(" ").append(ledger.getUser().getUsername()).append('\n');
+                    .append('\t').append(ledger.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(" ").append(ledger.getUser().getUsername()).append('\n');
             for (Ship ship : ledger.getLedgerItems()) {
                 sb.append("\t\t■ Ship ").append(ship.getID()).append(":\n")
                         .append("\t\t\t").append(ship.getName()).append('\n')

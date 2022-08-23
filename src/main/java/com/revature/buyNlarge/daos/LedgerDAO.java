@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class LedgerDAO implements DAO<Ledger> {
             ps.setString(1, key);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDate.class), rs.getBigDecimal("totalPrice"), ledgerItems);
+                return new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDateTime.class), rs.getBigDecimal("totalPrice"), ledgerItems);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class LedgerDAO implements DAO<Ledger> {
                 while (shipResultSet.next()){
                     ships.add(ShipService.getShipByID(shipResultSet.getString("id")));
                 }
-                ledgers.add(new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDate.class), rs.getBigDecimal("totalPrice"), ships));
+                ledgers.add(new Ledger(rs.getString("id"), UserService.getUserByUsername(rs.getString("username")), rs.getObject("date", LocalDateTime.class), rs.getBigDecimal("totalPrice"), ships));
             }
         } catch (SQLException e){
             e.printStackTrace();

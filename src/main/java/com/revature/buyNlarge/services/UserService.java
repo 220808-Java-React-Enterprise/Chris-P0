@@ -6,17 +6,23 @@ import com.revature.buyNlarge.utils.custom_exceptions.InvalidUserException;
 import java.util.List;
 
 public class UserService {
-    private static final UserDAO userDAO = new UserDAO();
-    public static void validateUsername(String username) throws InvalidUserException {
+    private static UserDAO userDAO = new UserDAO();
+
+    UserService(UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
+    public static boolean validateUsername(String username) throws InvalidUserException {
         if(!username.matches("^([A-Za-z\\d]{3,15}|[A-Za-z0-9][A-Za-z0-9!#$%&'*+\\-/=?^_`{}|]{0,63}@[A-Za-z0-9.-]{1,253}.[A-Za-z]{2,24})$")){
             throw new InvalidUserException("Username must start with a letter and consist of between 3 and 15 alphanumeric characters or be a valid email address.");
         }
+        return true;
     }
 
-    public static void validatePassword(String password) throws InvalidUserException {
+    public static boolean validatePassword(String password) throws InvalidUserException {
         if(!password.matches("^[A-Za-z\\d@$!%*?&]{5,30}$")){
             throw new InvalidUserException("Password must be between 5 and 30 alphanumeric or special characters.");
         }
+        return true;
     }
 
     public static void resisterUser(User user){

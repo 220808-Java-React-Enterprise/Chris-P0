@@ -1,6 +1,8 @@
 package com.revature.buyNlarge.ui;
 import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.models.User;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -51,8 +53,19 @@ public class UIState {
     public ArrayList<Ship> getCart() {
         return cart;
     }
+    public BigDecimal getCartTotal(){
+        BigDecimal sum = new BigDecimal("0");
+        for(Ship ship : cart){
+            sum = sum.add(ship.getTotalPrice());
+        }
+        return sum;
+    }
 
     public void removeFromCart(Ship ship) {
         cart.remove(ship);
+    }
+
+    public boolean cartIsEmpty() {
+        return cart.size() == 0;
     }
 }
