@@ -1,7 +1,6 @@
 package com.revature.buyNlarge.ui;
 import com.revature.buyNlarge.models.User;
 import com.revature.buyNlarge.services.UserService;
-
 import java.util.List;
 
 public class UsersMenu implements Menu {

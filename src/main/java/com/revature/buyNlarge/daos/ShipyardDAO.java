@@ -1,12 +1,7 @@
 package com.revature.buyNlarge.daos;
-
 import com.revature.buyNlarge.models.*;
-import com.revature.buyNlarge.services.ComponentTypeService;
-import com.revature.buyNlarge.services.ShipClassService;
-import com.revature.buyNlarge.services.ShipyardService;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,31 +12,13 @@ import java.util.List;
 public class ShipyardDAO implements DAO<Shipyard> {
 
     @Override
-    public void save(Shipyard shipyard) {
-        /**try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO ships (id, name, description, location, \"basePrice\", condition, class) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1, ship.getID());
-            ps.setString(2, ship.getName());
-            ps.setString(3, ship.getDescription());
-            if(ShipyardService.isShipyardInDatabase(ship.getLocation().getID())){
-
-            }
-            ps.setString(4, ship.getLocation().getID());
-            ps.setBigDecimal(5, ship.getBasePrice());
-            ps.setObject(6, ship.getCondition().name());
-            ps.setString(7, ship.getShipClass().getID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();**/
-            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
-        //}
-    }
+    public void save(Shipyard shipyard) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void update(Shipyard obj) {}
+    public void update(Shipyard obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
     public Shipyard getByKey(String key) {

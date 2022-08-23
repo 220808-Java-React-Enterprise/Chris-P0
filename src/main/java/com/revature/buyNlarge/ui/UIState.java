@@ -1,7 +1,6 @@
 package com.revature.buyNlarge.ui;
 import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.models.User;
-
 import java.util.ArrayList;
 import java.util.Stack;
 

@@ -1,10 +1,8 @@
 package com.revature.buyNlarge.daos;
-
 import com.revature.buyNlarge.models.*;
 import com.revature.buyNlarge.services.*;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,10 +30,10 @@ public class LedgerDAO implements DAO<Ledger> {
     }
 
     @Override
-    public void update(Ledger obj) {}
+    public void update(Ledger obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
     public Ledger getByKey(String key) {
@@ -61,9 +59,7 @@ public class LedgerDAO implements DAO<Ledger> {
     }
 
     @Override
-    public List<Ledger> getAll() {
-        return null;
-    }
+    public List<Ledger> getAll() {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     public ArrayList<Ledger> getLedgersByUsername(String username) {
         ArrayList<Ledger> ledgers = new ArrayList<Ledger>();

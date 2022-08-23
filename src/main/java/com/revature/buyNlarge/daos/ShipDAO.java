@@ -1,10 +1,8 @@
 package com.revature.buyNlarge.daos;
-
 import com.revature.buyNlarge.models.*;
 import com.revature.buyNlarge.services.*;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +42,10 @@ public class ShipDAO implements DAO<Ship> {
     }
 
     @Override
-    public void update(Ship obj) {}
+    public void update(Ship obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
     public Ship getByKey(String key) {

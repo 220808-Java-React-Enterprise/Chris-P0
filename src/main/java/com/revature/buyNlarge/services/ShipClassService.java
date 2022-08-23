@@ -1,9 +1,6 @@
 package com.revature.buyNlarge.services;
 import com.revature.buyNlarge.daos.ShipClassDAO;
-import com.revature.buyNlarge.daos.ShipyardDAO;
 import com.revature.buyNlarge.models.ShipClass;
-import com.revature.buyNlarge.models.Shipyard;
-
 import java.util.List;
 
 public class ShipClassService {

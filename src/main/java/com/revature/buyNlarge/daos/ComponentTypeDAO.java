@@ -14,31 +14,13 @@ import java.util.List;
 public class ComponentTypeDAO implements DAO<ComponentType> {
 
     @Override
-    public void save(ComponentType componentType) {
-        /**try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO ships (id, name, description, location, \"basePrice\", condition, class) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1, ship.getID());
-            ps.setString(2, ship.getName());
-            ps.setString(3, ship.getDescription());
-            if(ShipyardService.isShipyardInDatabase(ship.getLocation().getID())){
-
-            }
-            ps.setString(4, ship.getLocation().getID());
-            ps.setBigDecimal(5, ship.getBasePrice());
-            ps.setObject(6, ship.getCondition().name());
-            ps.setString(7, ship.getShipClass().getID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();**/
-            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
-        //}
-    }
+    public void save(ComponentType componentType) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void update(ComponentType obj) {}
+    public void update(ComponentType obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     private static HashMap<String, ComponentType> componentTypePool = new HashMap<String, ComponentType>();
     @Override
@@ -63,7 +45,5 @@ public class ComponentTypeDAO implements DAO<ComponentType> {
     }
 
     @Override
-    public List<ComponentType> getAll() {
-        return null;
-    }
+    public List<ComponentType> getAll() {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 }

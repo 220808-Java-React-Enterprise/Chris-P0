@@ -41,6 +41,7 @@ public class MainMenu implements Menu {
                 case "x": //Sign Out
                     System.out.println("Signing out...");
                     uiState.setUser(null);
+                    uiState.emptyCart();
                     break loop;
             }
         }

@@ -26,10 +26,10 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public void update(User obj) {}
+    public void update(User obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
     public User getByKey(String key) {

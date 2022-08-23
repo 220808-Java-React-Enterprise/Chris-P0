@@ -1,5 +1,4 @@
 package com.revature.buyNlarge.ui;
-
 import java.util.*;
 
 public interface Menu {

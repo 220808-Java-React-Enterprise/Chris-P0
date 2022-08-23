@@ -1,10 +1,7 @@
 package com.revature.buyNlarge.daos;
-
 import com.revature.buyNlarge.models.ShipClass;
-import com.revature.buyNlarge.models.Shipyard;
 import com.revature.buyNlarge.utils.custom_exceptions.InvalidSQLException;
 import com.revature.buyNlarge.utils.database.ConnectionFactory;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,33 +13,15 @@ import java.util.List;
 public class ShipClassDAO implements DAO<ShipClass> {
 
     @Override
-    public void save(ShipClass shipClass) {
-        /**try (Connection connection = ConnectionFactory.getInstance().getConnection()) {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO ships (id, name, description, location, \"basePrice\", condition, class) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            ps.setString(1, ship.getID());
-            ps.setString(2, ship.getName());
-            ps.setString(3, ship.getDescription());
-            if(ShipyardService.isShipyardInDatabase(ship.getLocation().getID())){
-
-            }
-            ps.setString(4, ship.getLocation().getID());
-            ps.setBigDecimal(5, ship.getBasePrice());
-            ps.setObject(6, ship.getCondition().name());
-            ps.setString(7, ship.getShipClass().getID());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();**/
-            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
-        //}
-    }
+    public void save(ShipClass shipClass) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void update(ShipClass obj) {}
+    public void update(ShipClass obj) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
     @Override
-    public void delete(String id) {}
+    public void delete(String id) {throw new InvalidSQLException("An error occurred when tyring to save to the database.");}
 
-    private static HashMap<String, ShipClass> shipClassPool = new HashMap<String, ShipClass>();
+    private static HashMap<String, ShipClass> shipClassPool = new HashMap<>();
     @Override
     public ShipClass getByKey(String key) {
         if(shipClassPool.containsKey(key)){
