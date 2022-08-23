@@ -42,10 +42,29 @@ public class AdminMenu implements Menu {
                     }
                     break;
                 case "3": // Add Shipyard
-                    //TODO
+                    addShipyard();
                     break;
                 case "4": // Edit Shipyard
-                    //TODO
+                    loop4: while(true) {
+                        List<Shipyard> shipyards = ShipyardService.getAllShipyards();
+                        for(int i = 0; i < shipyards.size(); i++){
+                            System.out.print("[" + (i + 1) + "] ");
+                            System.out.println(shipyards.get(i).getName());
+                        }
+                        String userInput = Menu.prompt("\nSelect a shipyard to edit: ");
+                        if(userInput.equals("x")){
+                            break loop4;
+                        }
+                        try {
+                            int userInt = Integer.parseInt(userInput) - 1;
+                            if ((userInt < shipyards.size()) && (userInt >= 0)) {
+                                Shipyard shipyard = editShipyard(shipyards.get(userInt));
+                                if(shipyard != null) ShipyardService.updateShipyard(shipyard);
+                            }
+                        }catch(NumberFormatException e){
+                            System.out.println("Invalid input.");
+                        }
+                    }
                     break;
                 case "5": // Add Ship Class
                     //TODO
@@ -99,6 +118,28 @@ public class AdminMenu implements Menu {
                     break loop;
                 case "n":
                     ship = editShip(ship);
+                    break;
+                case "x":
+                    return;
+            }
+        }
+    }
+
+    private void addShipyard(){
+        String name = Menu.prompt("Enter a name for the shipyard: ", false);
+        if(name.equals("x")) return;
+        String description = Menu.prompt("Enter a description for the shipyard: ", false);
+        if(description.equals("x")) return;
+        String address = Menu.prompt("Enter an address for the shipyard: ", false);
+        if(address.equals("x")) return;
+        Shipyard shipyard = new Shipyard(UUID.randomUUID().toString(), name, description, address);
+        loop: while(true) {
+            switch (Menu.prompt("\n" + shipyard + "\nIs this correct? (y/n): ", Arrays.asList("y", "n", "x"))) {
+                case "y":
+                    ShipyardService.registerShipyard(shipyard);
+                    break loop;
+                case "n":
+                    shipyard = editShipyard(shipyard);
                     break;
                 case "x":
                     return;
@@ -254,5 +295,28 @@ public class AdminMenu implements Menu {
             }
         }
         return ship;
+    }
+
+    private Shipyard editShipyard(Shipyard shipyard){
+        loop: while(true) {
+            switch (Menu.prompt( "[1] Name\n[2] Description\n[3] Address\nSelect a attribute to edit or 'x' to finish: ",
+                    Arrays.asList("1", "2", "3", "x"))) {
+                case "1": //Name
+                    String name = Menu.prompt("Enter a name for the shipyard: ", false);
+                    if(!name.equals("x")) shipyard.setName(name);
+                    break;
+                case "2": //Description
+                    String description = Menu.prompt("Enter a description for the shipyard: ", false);
+                    if(!description.equals("x")) shipyard.setDescription(description);
+                    break;
+                case "3": //Shipyard
+                    String address = Menu.prompt("Enter a address for the shipyard: ", false);
+                    if(!address.equals("x")) shipyard.setAddress(address);
+                    break;
+                case "x":
+                    break loop;
+            }
+        }
+        return shipyard;
     }
 }

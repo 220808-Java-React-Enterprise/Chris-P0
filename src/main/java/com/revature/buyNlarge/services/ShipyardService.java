@@ -21,4 +21,8 @@ public class ShipyardService {
     public static List<Shipyard> getAllShipyards(){
         return shipyardDAO.getAll();
     }
+
+    public static void updateShipyard(Shipyard shipyard) {
+        shipyardDAO.update(shipyard);
+    }
 }
