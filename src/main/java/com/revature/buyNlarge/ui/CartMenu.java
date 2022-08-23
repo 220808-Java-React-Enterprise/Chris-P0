@@ -3,9 +3,9 @@ import com.revature.buyNlarge.models.Ledger;
 import com.revature.buyNlarge.models.Ship;
 import com.revature.buyNlarge.services.LedgerService;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class CartMenu implements Menu {
@@ -16,28 +16,24 @@ public class CartMenu implements Menu {
 
     @Override
     public void display() {
-        List<Ship> ships = uiState.getCart();
         loop: while (true) {
             System.out.println();
-            for (int i = 0; i < ships.size(); i++) {
-                System.out.print("[" + (i + 1) + "] ");
-                System.out.print(ships.get(i));
+            for (Ship ship : uiState.getCart()) {
+                System.out.print(ship);
             }
-            optionsloop: while (true) {
-                switch (Menu.prompt("\nCart Menu\n[1] Checkout\n[2] Remove Items\n[3] Empty Cart\n[x] Exit\n\nChoose an option: ",
-                        Arrays.asList("1", "2", "3", "x"))) {
-                    case "1":
-                        if(checkout()) break loop;
-                        break;
-                    case "2":
-                        if(removeItem()) break loop;
-                        break;
-                    case "3":
-                        if(emptyCart()) break loop;
-                        break;
-                    case "x":
-                        break loop;
-                }
+            switch (Menu.prompt("\nCart Menu\n[1] Checkout\n[2] Remove Items\n[3] Empty Cart\n[x] Exit\n\nChoose an option: ",
+                    Arrays.asList("1", "2", "3", "x"))) {
+                case "1":
+                    if(checkout()) break loop;
+                    break;
+                case "2":
+                    removeItem();
+                    break;
+                case "3":
+                    if(emptyCart()) break loop;
+                    break;
+                case "x":
+                    break loop;
             }
         }
     }
@@ -56,7 +52,7 @@ public class CartMenu implements Menu {
                     }
                     LedgerService.registerLedger(new Ledger(UUID.randomUUID().toString(), uiState.getUser(), LocalDate.now(), sum, uiState.getCart()));
                     uiState.emptyCart();
-                    System.out.println("Your account has been billed. Purchase successful. Returning to Main Menu...");
+                    System.out.println("Your account has been billed " + NumberFormat.getCurrencyInstance().format(sum) + ". Purchase successful. Returning to Main Menu...");
                     return true;
                 case "n":
                     return false;
@@ -66,21 +62,36 @@ public class CartMenu implements Menu {
         }
     }
     private boolean removeItem(){
-        return false; //TODO finish
-        /**
-         selectloop:
-         while (true) {
-         String userInput = Menu.prompt("\nSelect a Ship to add to cart: ");
-         if (userInput.equals("x")) {
-         break loop;
-         }
-         int userInt = Integer.parseInt(userInput) - 1;
-         if ((userInt < ships.size()) && (userInt >= 0)) {
-         uiState.addToCart(ships.get(userInt));
-         break;
-         }
-         }
-         */
+        loop: while(true){
+            System.out.println("\nShips in cart:\n");
+            for(int i = 0; i < uiState.getCart().size(); i++){
+                System.out.print("[" + (i + 1) + "] ");
+                System.out.print(uiState.getCart().get(i));
+            }
+            selectloop: while(true) {
+                String userInput = Menu.prompt("\nSelect a Ship to remove from cart: ");
+                if(userInput.equals("x")){
+                    return false;
+                }
+                int userInt = Integer.parseInt(userInput) - 1;
+                if ((userInt < uiState.getCart().size()) && (userInt >= 0)) {
+                    System.out.println("Ship " + uiState.getCart().get(userInt).getID() + " has been removed from cart.");
+                    uiState.removeFromCart(uiState.getCart().get(userInt));
+                    break;
+                }
+            }
+            keepsremovingloop: while(true){
+                switch(Menu.prompt("\nKeep removing items from cart? (y/n): ",
+                        Arrays.asList("y", "n", "x"))){
+                    case "y":
+                        break keepsremovingloop;
+                    case "n":
+                        return true;
+                    case "x":
+                        return false;
+                }
+            }
+        }
     }
     private boolean emptyCart(){
          uiState.emptyCart();

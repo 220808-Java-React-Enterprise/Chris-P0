@@ -51,4 +51,8 @@ public class UIState {
     public ArrayList<Ship> getCart() {
         return cart;
     }
+
+    public void removeFromCart(Ship ship) {
+        cart.remove(ship);
+    }
 }

@@ -21,7 +21,7 @@ public class ShipDAO implements DAO<Ship> {
             }
             ps.setString(4, ship.getShipyard().getID());
             ps.setBigDecimal(5, ship.getBasePrice());
-            ps.setObject(6, ship.getCondition(), java.sql.Types.OTHER);
+            ps.setObject(6, ship.getCondition().name(), java.sql.Types.OTHER);
             if(!ShipClassService.isShipClassRegistered(ship.getShipClass().getID())){
                 ShipClassService.registerShipClass(ship.getShipClass());
             }
