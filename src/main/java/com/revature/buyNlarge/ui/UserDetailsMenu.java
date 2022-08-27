@@ -48,8 +48,7 @@ public class UserDetailsMenu implements Menu {
             sb.append("Ledger ").append(ledger.getID()).append('\n')
                     .append('\t').append(ledger.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))).append(" ").append(ledger.getUser().getUsername()).append('\n');
             for (Ship ship : ledger.getLedgerItems()) {
-                sb.append("\t\t■ Ship ").append(ship.getID()).append(":\n")
-                        .append("\t\t\t").append(ship.getName()).append('\n')
+                sb.append("\t\t■ ").append(ship.getName()).append('\n')
                         .append("\t\t\t").append(ship.getDescription()).append('\n')
                         .append("\t\t\tLocated at ").append(ship.getShipyard().getName()).append('\n')
                         .append("\t\t\tPrice: ").append(NumberFormat.getCurrencyInstance().format(ship.getTotalPrice())).append('\n')
@@ -58,7 +57,7 @@ public class UserDetailsMenu implements Menu {
                     sb.append("\t\t\t\t<> ").append(component.getCondition()).append("-quality ").append(component.getType().getName()).append('\n');
                 }
             }
-            sb.append("\tTotal: ").append(NumberFormat.getCurrencyInstance().format(ledger.getTotalPrice())).append('\n');
+            sb.append("\tTotal: ").append(NumberFormat.getCurrencyInstance().format(ledger.getTotalPrice())).append("\n\n");
             System.out.println(sb);
         }
         System.out.print("Press enter to return.");

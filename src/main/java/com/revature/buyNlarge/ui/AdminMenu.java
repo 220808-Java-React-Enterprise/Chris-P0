@@ -15,7 +15,7 @@ public class AdminMenu implements Menu {
     public void display() {
         loop: while (true) {
             switch (Menu.prompt("\nAdmin Menu\n[1] Add Ship\n[2] Edit Ship\n[3] Add Shipyard\n[4] Edit Shipyard\n[5] Add Ship Class\n[6] Edit Ship Class\n[7] Add Component Type\n[8] Edit Component Type\n[9] Add Component\n[10] Edit Component\n[x] Exit\n\nChoose an option: ",
-                    Arrays.asList("1", "2", "3", "4", "5", "f", "x"))) {
+                    Arrays.asList("1", "2", "3", "4", "5", "f", "u", "x"))) {
                 case "1": // Add Ship
                     addShip();
                     break;
@@ -91,6 +91,9 @@ public class AdminMenu implements Menu {
                         ShipFactory.createRandomShip();
                     }
                     break;
+                case "u":
+                    System.out.println(UUID.randomUUID().toString());
+                    break;
             }
         }
     }
@@ -126,6 +129,7 @@ public class AdminMenu implements Menu {
     }
 
     private void addShipyard(){
+        //TODO parse theta and pi
         String name = Menu.prompt("Enter a name for the shipyard: ", false);
         if(name.equals("x")) return;
         String description = Menu.prompt("Enter a description for the shipyard: ", false);
@@ -151,7 +155,7 @@ public class AdminMenu implements Menu {
         loop: while(true) {
             List<Shipyard> shipyards = ShipyardService.getAllShipyards();
             for(int i = 0; i < shipyards.size(); i++){
-                System.out.print("[" + (i + 1) + "] ");
+                System.out.print("\t[" + (i + 1) + "] ");
                 System.out.println(shipyards.get(i).getName());
             }
             selectloop: while(true) {
@@ -189,7 +193,7 @@ public class AdminMenu implements Menu {
         loop: while(true) {
             List<Condition> conditions = Arrays.asList(Condition.values());
             for(int i = 1; i < conditions.size() - 1; i++){
-                System.out.print("[" + (i) + "] ");
+                System.out.print("\t[" + (i) + "] ");
                 System.out.println(conditions.get(i));
             }
             selectloop: while(true) {
@@ -213,7 +217,7 @@ public class AdminMenu implements Menu {
         loop: while(true) {
             List<ShipClass> shipClasses = ShipClassService.getAllShipClasses();
             for(int i = 0; i < shipClasses.size(); i++){
-                System.out.print("[" + (i + 1) + "] ");
+                System.out.print("\t[" + (i + 1) + "] ");
                 System.out.println(shipClasses.get(i).getName());
             }
             selectloop: while(true) {
@@ -238,7 +242,7 @@ public class AdminMenu implements Menu {
         loop: while(true) {
             List<ComponentType> componentTypes = ComponentTypeService.getAllComponentTypes();
             for (int i = 0; i < componentTypes.size(); i++) {
-                System.out.print("[" + (i + 1) + "] ");
+                System.out.print("\t[" + (i + 1) + "] ");
                 System.out.println(componentTypes.get(i).getName());
             }
             String userInput = Menu.prompt("Select a component to add to the ship or 'x' to finish: ");

@@ -107,8 +107,7 @@ public class Ship {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Ship ").append(id).append(":\n")
-                .append("\t").append(name).append('\n')
+        sb.append(name).append('\n')
                 .append("\t").append(description).append('\n')
                 .append("\tLocated at ").append(shipyard.getName()).append('\n')
                 .append("\tPrice: ").append(NumberFormat.getCurrencyInstance().format(getTotalPrice())).append('\n')

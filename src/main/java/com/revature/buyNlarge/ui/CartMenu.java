@@ -21,7 +21,7 @@ public class CartMenu implements Menu {
                 System.out.println("No ships in cart.");
             }
             for (Ship ship : uiState.getCart()) {
-                System.out.print(ship);
+                System.out.println(ship);
             }
             System.out.println("Total: " + NumberFormat.getCurrencyInstance().format(uiState.getCartTotal()));
             switch (Menu.prompt("\nCart Menu\n[1] Checkout\n[2] Remove Items\n[3] Empty Cart\n[x] Exit\n\nChoose an option: ",
@@ -51,8 +51,8 @@ public class CartMenu implements Menu {
                     Arrays.asList("y", "n", "x"))){
                 case "y":
                     LedgerService.registerLedger(new Ledger(UUID.randomUUID().toString(), uiState.getUser(), LocalDateTime.now(), uiState.getCartTotal(), uiState.getCart()));
-                    uiState.emptyCart();
                     System.out.println("Your account has been billed " + NumberFormat.getCurrencyInstance().format(uiState.getCartTotal()) + ". Purchase successful. Returning to Main Menu...");
+                    uiState.emptyCart();
                     return true;
                 case "n":
                     return false;
@@ -70,10 +70,10 @@ public class CartMenu implements Menu {
             System.out.println("\nShips in cart:\n");
             for(int i = 0; i < uiState.getCart().size(); i++){
                 System.out.print("[" + (i + 1) + "] ");
-                System.out.print(uiState.getCart().get(i));
+                System.out.println(uiState.getCart().get(i));
             }
         System.out.println("Total: " + NumberFormat.getCurrencyInstance().format(uiState.getCartTotal()));
-            String userInput = Menu.prompt("\nSelect a Ship to remove from cart or 'x' to finish: ");
+            String userInput = Menu.prompt("Select a Ship to remove from cart or 'x' to finish: ");
             if(userInput.equals("x")){
                 return false;
             }

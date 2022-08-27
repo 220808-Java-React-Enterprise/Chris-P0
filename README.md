@@ -1,4 +1,4 @@
-# Buy-N-Large
+# Buy-N-Large: Used Spaceships
 
 ## Description
 Welcome patron. Are you planning a trip to Alpha Centauri or the Lessor Magellanic Cloud? Perhaps a pesky neighbor in a neighboring star system needs "dealing with". Maybe you just want to surf Saturn's Rings in comfort and style. Whatever your needs, Buy-N-Large has just the spaceship for you.
@@ -24,6 +24,7 @@ The store app is a software that helps customers purchase products from your bus
 * Apache Maven
 * JUnit
 * Mockito
+* Lucid Chart
 
 ## ERD
 <img src="src/main/resources/P0 ERD.png" alt="ERD" style="float: left; margin-right: 10px;" />
